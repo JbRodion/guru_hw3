@@ -1,19 +1,18 @@
-import pytest
+from selene import browser, be, have, by
 
 
-@pytest.fixture
-def login_page(browser):
-    print("Page of login!")
+def test_positive_search(url_browser, conf_browser):
+    browser.element('[id=searchbox_input]').should(be.blank).type('yashaka/selene').press_enter()
+    browser.element('[id=web_content_wrapper]').should(have.text('yashaka/selene'))
+
+   # assert browser.should()
 
 
-@pytest.fixture
-def user():
-    print("User!")
-    return "username", "password"
+def test_negative_search(url_browser, conf_browser):
+    browser.element('[id=searchbox_input]').should(be.blank).type('}}||||<<?????').press_enter()
+    browser.element('[id=web_content_wrapper]').should(have.text('По запросу }}||||<<????? не найдены результаты'))
 
 
-
-def test_login(login_page, user):
-    username, password = user
-    assert username == "username"
-    assert password == "password"
+# browser.open('https://duckduckgo.com/')
+# browser.element('[name="q"]').should(be.blank).type('yashaka/selene').press_enter()
+# browser.element('html').should(have.text('yashaka/selene'))
