@@ -3,13 +3,13 @@ from selene import browser
 
 @pytest.fixture(scope="session")
 def conf_browser():
-    browser.config.window_width = 1920
-    browser.config.window_height = 1080
-
-@pytest.fixture(scope="session")
-def url_browser():
-    browser.open('https://duckduckgo.com/')
-
+    browser.config.window_size = (1920,1080)
     yield
     browser.quit()
+
+@pytest.fixture(scope="function")
+def url_browser(conf_browser):
+    browser.open('https://duckduckgo.com')
+
+
 
